@@ -15,9 +15,11 @@ The function should:
   Example createMenuItem('tacos', 8, 'Lunch') should return {name: 'tacos', price: 8, category: 'Lunch'}
 */
 
-function createMenuItem(/*Your code here*/){
-    /*Your code here*/
+function createMenuItem(name, price, category){
+    return {name, price, category};
 }
+
+//console.log(createMenuItem('tacos', 8, 'Lunch'));
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 1b: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Invoke your function!
@@ -29,6 +31,11 @@ Test your createMenuItems function by doing the following:
   For example: createMenuItem("pizza",5,"lunch") would return this as the object: {name:"Pizza",price:5,category:"lunch"}
 */
 
+const pizza = createMenuItem('pizza', 5, 'lunch');
+const iceCream = createMenuItem('ice cream', 4, 'dessert');
+const omlette = createMenuItem('omlette', 4, 'breakfast');
+
+//console.log(pizza, iceCream, omlette);
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 2: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -48,9 +55,16 @@ const burger = {
   price: 18, 
   category: "Lunch", 
   
+  discount: function (costCode) {
+    if (costCode === 'teacher' || costCode === 'student') {
+      return this.price * (1 - .25);
+    } else {
+      return this.price * (1 - .10);
+    }
+  }
 }
 
-
+// console.log(burger.discount('public'));
 
 ///////////////Reviews (MVP)///////////////////
 const reviews = [
@@ -69,7 +83,7 @@ Using the reviews array above:
   1. log only Julius' feedback to the console - no function needed 
 */
 
-
+// console.log(reviews[5].feedback);
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 4: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
@@ -78,8 +92,8 @@ Reyna's feedback is missing! Use what you know to do the following: (no function
   2. log the reviews array to the console to check your work
 */
 
-
-
+reviews[reviews.length - 1].feedback = "this place is chill with really cool people, great for getting work done on weekdays";
+// console.log(reviews);
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -91,9 +105,13 @@ Write a function that creates an object with name, rating, feedback, add the new
   4. should return the resulting array
 */
 
-function addReview(/*Your Code Here */){
-  /*Your Code Here */
+function addReview(reviewArray, name, rating, feedback){
+  let arrayCopy = reviewArray.slice();
+  arrayCopy.push({name, rating, feedback});
+  return arrayCopy;
 }
+
+//console.log(addReview(reviews, 'Daniela', 5, 'Beautiful atmosphere and wonderful vegan options!'));
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Write a function to return a review based on the index of the review in the array.
@@ -106,11 +124,12 @@ Use the getReviewByIndex function below to do the following:
 */
 
 
-function getReviewByIndex(/*Your code here*/) {
-  /*Your code here*/
+function getReviewByIndex(array, index) {
+  const review = array[index];
+  return `${review.name} gave the restaurant a ${review.rating} star review, and their feedback was: ${review.feedback}`;
 }
 
-
+//console.log(getReviewByIndex(reviews, 0));
   
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 7: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
@@ -125,11 +144,13 @@ Use the getLastReview function below to do the following:
 */
 
 
-function getLastReview(/*Your code here*/) {
-  /*Your code here*/
+function getLastReview(array) {
+  const index = array.length - 1;
+  const review = array[index];
+  return `${review.name} gave the restaurant a ${review.rating} star review, and their feedback was: ${review.feedback}`;
 } 
 
-
+//console.log(getLastReview(reviews));
 
 ///////////////🍔☕️🍽 STRETCH🍔☕️🍽////////////////////
 
@@ -147,10 +168,19 @@ Use the getReviewsByRating function below to do the following:
   ]
 */
 
- function getReviewByRating(/* code here */) {
-    /* code here */
+ function getReviewByRating(array, rating) {
+    let returnReviews = [];
+
+    for (let i = 0; i < array.length; i++) {
+      if (Math.floor(array[i].rating) <= rating && rating <= Math.floor(array[i].rating) + .99) {
+        //console.log(`floor: ${Math.floor(array[i].rating)}, ceil: ${Math.floor(array[i].rating) + .99}`);
+        returnReviews.push(array[i]);
+      }
+    }
+    return returnReviews;
   }
 
+  //console.log(getReviewByRating(reviews, 2));
   
 /* 💪💪💪💪💪💪💪💪💪💪 STRETCH 2: 💪💪💪💪💪💪💪💪💪💪   
 Use the getLongReviews function below to do the following:
@@ -165,10 +195,22 @@ Use the getLongReviews function below to do the following:
   ]
 */
 
-function getLongReviews(/* code here */) {
-    /* code here */
+function getLongReviews(array) {
+  const longReviews = [];
+
+  for (let i = 0; i < array.length; i++) {
+    const wordArray = array[i].feedback.split(' ');
+    
+    console.log(wordArray, wordArray.length);
+
+    if (wordArray.length > 15) {
+      longReviews.push(array[i]);
+    }
   }
+  return longReviews;
+}
   
+// console.log(getLongReviews(reviews));
 
 /* 💪💪💪💪💪💪💪💪💪💪 STRETCH 3: 💪💪💪💪💪💪💪💪💪💪 
 This stretch goal does not use the reviews data!  You create your own object in this stretch goal.
@@ -188,11 +230,19 @@ Use the carMaker function below to do the following:
 */
 
 
-function carMaker(/* code here */) {
-    /* code here */
+function carMaker(odometer) {
+  let car = {odometer: odometer};
     
+  car.drive = function (miles) {
+    this.odometer += miles;
+  }
+
+  return car;
 }
 
+let car = carMaker(1000);
+car.drive(50);
+console.log(car.odometer);
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
 function foo(){
